@@ -1,0 +1,35 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: cert-manager
+deploy:
+  helm:
+    releases:
+      - name: cert-manager
+        # See: https://artifacthub.io/packages/helm/cert-manager/cert-manager
+        remoteChart: jetstack/cert-manager
+        version: v1.6.1
+        namespace: cert-manager
+        createNamespace: true
+        wait: true
+        upgradeOnChange: true
+        setValues:
+          installCRDs: true
+      - name: cert-issuer-acme-letsencrypt-staging
+        chartPath: cert-issuer-acme
+        namespace: cert-manager
+        createNamespace: true
+        wait: true
+        skipBuildDependencies: true
+        valuesFiles:
+          - cert-issuer-acme/values.letsencrypt-staging.yaml
+          - cert-issuer-acme/values.custom.yaml
+      - name: cert-issuer-acme-letsencrypt-prod
+        chartPath: cert-issuer-acme
+        namespace: cert-manager
+        createNamespace: true
+        wait: true
+        skipBuildDependencies: true
+        valuesFiles:
+          - cert-issuer-acme/values.letsencrypt-prod.yaml
+          - cert-issuer-acme/values.custom.yaml

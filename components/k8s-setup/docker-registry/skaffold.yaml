@@ -1,0 +1,27 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: registry
+deploy:
+  helm:
+    releases:
+      - name: docker-registry
+        # See: https://artifacthub.io/packages/helm/twuni/docker-registry
+        remoteChart: twuni/docker-registry
+        version: 1.14.0
+        # '.K8S_NAMESPACE' cannot be used directly here due to Skaffold error "missingkey=error"
+        namespace: '{{ index $ "K8S_NAMESPACE" | default "internal" }}'
+        createNamespace: true
+        wait: true
+        upgradeOnChange: true
+        valuesFiles:
+          - values.default.yaml
+        setFiles:
+          # Note: Registry requires .htpasswd generated with `bcrypt` encryption
+          secrets.htpasswd: custom/secret/.htpasswd
+profiles:
+  - name: custom
+    patches:
+      - op: add
+        path: /deploy/helm/releases/0/valuesFiles/-
+        value: values.custom.yaml

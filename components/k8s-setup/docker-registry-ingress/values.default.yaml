@@ -1,0 +1,8 @@
+ingressClassName: nginx
+annotations:
+  cert-manager.io/cluster-issuer: cert-issuer-acme-letsencrypt-staging
+defaultPath: '/'
+#rules:
+#  - host: example.com
+#    serviceName: docker-registry
+#    servicePortNumber: 5000

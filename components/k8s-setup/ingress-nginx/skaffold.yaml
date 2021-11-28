@@ -1,0 +1,28 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: ingress-nginx
+deploy:
+  helm:
+    releases:
+      - name: ingress-nginx
+        remoteChart: ingress-nginx/ingress-nginx
+        # See: https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
+        version: 4.0.10
+        namespace: ingress-nginx
+        createNamespace: true
+        wait: true
+        upgradeOnChange: true
+        valuesFiles:
+          - values.default.yaml
+profiles:
+  - name: custom
+    patches:
+      - op: add
+        path: /deploy/helm/releases/0/valuesFiles/-
+        value: values.custom.yaml
+  - name: nodeport
+    patches:
+      - op: add
+        path: /deploy/helm/releases/0/valuesFiles/-
+        value: values.nodeport.yaml

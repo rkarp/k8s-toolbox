@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: prometheus
+deploy:
+  helm:
+    releases:
+      - name: prometheus
+        version: 14.11.1
+        # See: https://artifacthub.io/packages/helm/prometheus-community/prometheus
+        remoteChart: prometheus-community/prometheus
+        namespace: prometheus
+        createNamespace: true
+        wait: true
+        upgradeOnChange: true

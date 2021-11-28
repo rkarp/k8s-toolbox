@@ -1,0 +1,7 @@
+ingressClassName: nginx
+annotations: {}
+defaultPath: '/'
+rules: []
+#  - host: example.com
+#    serviceName: myservice
+#    servicePortNumber: 8080

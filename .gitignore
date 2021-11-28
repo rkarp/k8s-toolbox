@@ -1,5 +1,7 @@
 /.idea/
 /.vscode/
 /target/
-/temp/
+**/temp/
+**/custom/local/
+**/custom/secret/
 *.iml

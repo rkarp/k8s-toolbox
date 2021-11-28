@@ -1,0 +1,3 @@
+#certificate:
+  #issuerEmail: 'test@example.com'
+ingressClass: nginx
