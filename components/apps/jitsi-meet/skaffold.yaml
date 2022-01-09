@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: jitsi
+deploy:
+  helm:
+    releases:
+      - name: jitsi-meet
+        # See: https://github.com/jitsi-contrib/jitsi-helm
+        remoteChart: jitsi/jitsi-meet
+        version: 1.0.0
+        namespace: jitsi-meet
+        createNamespace: true
+        wait: true
+        upgradeOnChange: true
+        valuesFiles:
+          - values.default.yaml
+profiles:
+  - name: custom
+    patches:
+      - op: add
+        path: /deploy/helm/releases/0/valuesFiles/-
+        value: values.custom.yaml
