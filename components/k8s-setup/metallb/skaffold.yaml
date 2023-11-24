@@ -1,18 +1,20 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v4beta8
 kind: Config
 metadata:
   name: metallb
-deploy:
+manifests:
   helm:
     releases:
       - name: metallb
         remoteChart: metallb/metallb
         # See: https://artifacthub.io/packages/helm/metallb/metallb
-        version: 0.11.0
+        version: 0.13.10
         namespace: metallb-system
         createNamespace: true
         wait: true
         upgradeOnChange: true
         valuesFiles:
           # See: https://metallb.universe.tf/installation/
-          - values.custom.yaml
+          - values.default.yaml
+deploy:
+  helm: {}

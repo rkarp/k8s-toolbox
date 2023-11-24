@@ -13,7 +13,5 @@ Deploy / upgrade Helm chart:
 ```shell
 helm repo update
 
-kubectl use-context <previousy set up context>
-
 skaffold run
 ```

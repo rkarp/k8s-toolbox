@@ -1,8 +1,8 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v4beta8
 kind: Config
 metadata:
   name: cert-manager
-deploy:
+manifests:
   helm:
     releases:
       - name: cert-manager
@@ -33,3 +33,5 @@ deploy:
         valuesFiles:
           - cert-issuer-acme/values.letsencrypt-prod.yaml
           - cert-issuer-acme/values.custom.yaml
+deploy:
+  helm: {}

@@ -1,8 +1,8 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v4beta8
 kind: Config
 metadata:
   name: registry
-deploy:
+manifests:
   helm:
     releases:
       - name: docker-registry
@@ -19,9 +19,11 @@ deploy:
         setFiles:
           # Note: Registry requires .htpasswd generated with `bcrypt` encryption
           secrets.htpasswd: custom/secret/.htpasswd
+deploy:
+  helm: {}
 profiles:
   - name: custom
     patches:
       - op: add
-        path: /deploy/helm/releases/0/valuesFiles/-
+        path: /manifests/helm/releases/0/valuesFiles/-
         value: values.custom.yaml

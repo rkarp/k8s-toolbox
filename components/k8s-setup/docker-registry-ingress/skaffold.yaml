@@ -1,8 +1,8 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v4beta8
 kind: Config
 metadata:
   name: registry-ingress
-deploy:
+manifests:
   helm:
     releases:
       - name: docker-registry-ingress
@@ -13,9 +13,11 @@ deploy:
         skipBuildDependencies: true
         valuesFiles:
           - values.default.yaml
+deploy:
+  helm: {}
 profiles:
   - name: custom
     patches:
       - op: add
-        path: /deploy/helm/releases/0/valuesFiles/-
+        path: /manifests/helm/releases/0/valuesFiles/-
         value: values.custom.yaml
